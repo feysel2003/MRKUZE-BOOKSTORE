@@ -5,6 +5,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineShoppingCart, HiOutlineUser } from "react-icons/hi";
 import { HiOutlineHeart } from "react-icons/hi";
 import avatarImg from "../assets/avatar.png";
+import { useSelector } from 'react-redux';
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
@@ -15,6 +16,10 @@ const navigation = [
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const cartItems = useSelector(state => state.cart.cartItems);
+
+  console.log(cartItems);
 
   const currentUser = true;
 
