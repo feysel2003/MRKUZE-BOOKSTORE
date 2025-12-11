@@ -1,5 +1,5 @@
 import React from 'react'
-import bannerImg from "../../assets/banner.png"
+import bannerImg from "../../assets/banner2.png"
 const Banner = () => {
   return (
     <div className='flex flex-col md:flex-row py-16 justify-between items-center gap-12'>
