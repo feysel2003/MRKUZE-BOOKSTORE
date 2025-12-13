@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const CheckOut = () => {
 
@@ -9,7 +10,8 @@ const CheckOut = () => {
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
 
-    const currentUser = true;
+    const { currentUser } = useAuth();
+
     const {
         register,
         handleSubmit,
@@ -35,7 +37,12 @@ const CheckOut = () => {
             totalPrice: totalPrice
         }
 
-        console.log(newOrder)
+        try {
+            
+        } catch (error) {
+           console.error("Error place an order", error) 
+           alert("Failed to place an order")
+        }
     
     }
 
