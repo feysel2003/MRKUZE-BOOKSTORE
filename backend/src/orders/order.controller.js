@@ -1,7 +1,7 @@
 const Order = require("./order.model")
 
 
-const createAOrder = async() => {
+const createAOrder = async (req, res) => {
 
     try {
         const newOrder = await Order(req.body);
