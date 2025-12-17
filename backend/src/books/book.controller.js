@@ -71,9 +71,25 @@ try {
 }
 }
 
+// delete book  logic
 const deleteABook = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedBook = await Book.findByIdAndDelete(id);
 
-} 
+        if (!deletedBook) {
+            return res.status(404).send({ message: "Book is not Found!" });
+        }
+
+        res.status(200).send({
+            message: "Book deleted successfully",
+            book: deletedBook
+        });
+    } catch (error) {
+        console.error("Error deleting a Book", error);
+        res.status(500).send({ message: "Failed to delete a book" });
+    }
+}
 module.exports = { 
     postABook,
  getAllBooks,
