@@ -1,18 +1,16 @@
 const mongoose = require('mongoose');
 
-const bookSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-
     },
     email: {
         type: String,
         required: true,
     },
     address: {
-        city:{
-
+        city: {
             type: String,
             required: true,
         },
@@ -24,7 +22,7 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    productIds:[
+    productIds: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Book',
@@ -34,11 +32,26 @@ const bookSchema = new mongoose.Schema({
     totalPrice: {
         type: Number,
         required: true,
+    },
+    // --- NEW FIELDS ADDED ---
+    paymentMethod: {
+        type: String,
+        enum: ['cod', 'bank', 'card'], // Must match the values sent from frontend
+        default: 'cod',
+        required: true
+    },
+    paymentProof: {
+        type: String, // URL string for the screenshot
+        required: false 
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'processing', 'shipped', 'completed'],
+        default: 'pending'
     }
-},
-{
+}, {
     timestamps: true,
 })
 
-const Order = mongoose.model('Order', bookSchema);
+const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

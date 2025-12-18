@@ -10,8 +10,11 @@ router.get("/", async (req, res) => {
         // 1. Total numbers Of Orders
         const totalOrders = await Order.countDocuments();
 
-        // 2. Total sales (sum of totalPrices from orders)
+        // 2. Total sales (ONLY for 'completed' orders)
         const totalSales = await Order.aggregate([
+            {
+                $match: { status: 'completed' } // <--- FIX: Filter only completed orders
+            },
             {
                 $group: {
                     _id: null,
@@ -22,8 +25,8 @@ router.get("/", async (req, res) => {
 
         // 3. Trending books statistics:
         const trendingBooksCount = await Book.aggregate([
-            { $match: { trending: true } }, // match only trending books
-            { $count: "trendingBookCount" }  // Return the count of trending books
+            { $match: { trending: true } },
+            { $count: "trendingBookCount" }
         ]);
         
         const trendingBooks = trendingBooksCount.length > 0 ? trendingBooksCount[0].trendingBookCount : 0;
@@ -31,8 +34,11 @@ router.get("/", async (req, res) => {
         // 4. Total number of books
         const totalBooks = await Book.countDocuments();
 
-        // 5. Monthly sales (group by month and sum total sales)
+        // 5. Monthly sales (ONLY for 'completed' orders)
         const monthlySales = await Order.aggregate([
+            {
+                $match: { status: 'completed' } // <--- FIX: Filter only completed orders for the chart too
+            },
             {
                 $group: {
                     _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } }, 
@@ -43,20 +49,20 @@ router.get("/", async (req, res) => {
             { $sort: { _id: 1 } }
         ]);
 
-        // --- NEW: 6. Get Last 5 Recent Orders ---
+        // 6. Get Last 5 Recent Orders
         const lastOrders = await Order.find()
-            .sort({ createdAt: -1 }) // Sort by newest first
-            .limit(5) // Only get 5
-            .select('name email totalPrice createdAt'); // Get specific fields
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .select('name email totalPrice status createdAt'); // Added 'status' to see it in the list
 
         // Result summary
         res.status(200).json({
             totalOrders,
-            totalSales: totalSales[0]?.totalSales || 0,
+            totalSales: totalSales.length > 0 ? totalSales[0].totalSales : 0,
             trendingBooks,
             totalBooks,
             monthlySales,
-            lastOrders // Sending this to frontend
+            lastOrders
         });
 
     } catch (error) {

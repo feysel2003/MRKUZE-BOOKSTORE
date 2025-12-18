@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -7,7 +8,7 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     password: {
-        type:String,
+        type: String,
         required: true
     },
     role: {
@@ -15,13 +16,17 @@ const userSchema = new mongoose.Schema({
         enum: ['user', 'admin'],
         required: true
     }
-})
+});
 
-userSchema.pre('save', async function( next ) {
-    if(!this.isModified('password'))
-        return next();
+// FIX: Removed 'next'. 
+// When using async, you don't need next(). Mongoose handles it automatically.
+userSchema.pre('save', async function() {
+    // If password is not modified, do not hash it again
+    if (!this.isModified('password')) return;
+
+    // Hash the password (this happens automatically when .save() is called)
     this.password = await bcrypt.hash(this.password, 10);
-    next();
-})
+});
+
 const User = mongoose.model('User', userSchema);
 module.exports = User;
