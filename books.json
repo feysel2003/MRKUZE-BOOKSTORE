@@ -1,0 +1,314 @@
+[
+    {
+      "_id": 1,
+      "title": "IT'S OUR DAM",
+      "description": "a business-centric perspective on one of Ethiopia's most significant infrastructure projects.",
+      "category": "business",
+      "trending": true,
+      "coverImage": "business1.jpg",
+      "oldPrice": 29.99,
+      "newPrice": 19.99
+    },
+    {
+      "_id": 2,
+      "title": "Ethiopia Incorporated Transforming the Way Businesses Run in Africa",
+      "description": "economics-focused publication that explores modernizing corporate practices within Ethiopia and the broader African continent.",
+      "category": "business",
+      "trending": true,
+      "coverImage": "business2.jpg",
+      "oldPrice": 24.99,
+      "newPrice": 14.99
+    },
+    {
+      "_id": 3,
+      "title": "Ethiopian social economy",
+      "description": "The Ethiopian social economy is a diverse and vital sector characterized by community-based and cooperative models, particularly in agriculture, savings, and credit. ",
+      "category": "marketing",
+      "trending": true,
+      "coverImage": "business3.jpg",
+      "oldPrice": 39.99,
+      "newPrice": 29.99
+    },
+    {
+      "_id": 4,
+      "title": "Cashflow Quadrant",
+      "description": "a powerful book that teaches how people earn money in four different ways—and how choosing the right path leads to financial independence",
+      "category": "business",
+      "trending": false,
+      "coverImage": "business4.jpg",
+      "oldPrice": 49.99,
+      "newPrice": 39.99
+    },
+    {
+      "_id": 5,
+      "title": "Innovation Management Landscape for Digital Economy",
+      "description": " the role that innovation resilience techniques play as a mediator in the link that exists between Ethiopia's digital economy's transformational potential and the innovation management environment",
+      "category": "business",
+      "trending": true,
+      "coverImage": "business5.jpg",
+      "oldPrice": 19.99,
+      "newPrice": 9.99
+    },
+    {
+      "_id": 6,
+      "title": " The Entrepreneurial Ecosystem in Ethiopia",
+      "description": "A complete guide to digital marketing strategies for 2024.",
+      "category": "business",
+      "trending": false,
+      "coverImage": "business6.jpg",
+   
+      "oldPrice": 44.99,
+      "newPrice": 34.99
+    },
+    {
+      "_id": 7,
+      "title": "አለመኖር",
+      "description": "Absence Of course, everyone goes through the same experiences in life: joy, sorrow, suffering, pain, and then joy and sorrow again... They will pass. In other words, there is no real difference between life and death, only the difference between being alive and being dead. ",
+      "category": "fiction",
+      "trending": true,
+      "coverImage": "fiction1.jpg",
+      "oldPrice": 59.99,
+      "newPrice": 49.99
+    },
+    {
+      "_id": 8,
+      "title": "ቤተልሔም",
+      "description": "The seven characters in the book of Bethlehem are drunk, not from the grooming of the man who was baptized 'according to the nation,' but from the grooming that was baptized 'in every house.' One of them survived being a 'masterful monster' by Daso",
+      "category": "fiction",
+      "trending": true,
+      "coverImage": "fiction2.jpg",
+      "oldPrice": 21.99,
+      "newPrice": 16.99
+    },
+   {
+  "_id": 9,
+  "title": "ዥዋዥዌ",
+  "description": "In her new book, Memoirs, she writes, I have tried to show through these stories that the modern Ethiopian is present in our lives—both the orderly and the chaotic, the successful and the struggling, the beautiful and the hurt, the joyful and the complaining, the proud and the ashamed.",
+  "category": "fiction",
+  "trending": false,
+  "coverImage": "fiction3.jpg",
+  "oldPrice": 27.99,
+  "newPrice": 18.99
+}
+,
+    {
+      "_id": 10,
+      "title": "Ethiopia Mathematics Student Textbook Grade 9",
+      "description": "Ethiopian mathematics textbook for ninth grade, in English. This can be downloaded from the Ethiopian government's website",
+      "category": "education",
+      "trending": true,
+      "coverImage": "education1.jpg",
+      "oldPrice": 14.99,
+      "newPrice": 10.99
+    },
+    {
+      "_id": 11,
+      "title": "Ethiopian Grade 10 Geography Student Textbook",
+      "description": "Ethiopian geography textbook for 10th grade, in English. This can be downloaded from the Ethiopian government's website",
+      "category": "education",
+      "trending": true,
+      "coverImage": "education2.png",
+      "oldPrice": 32.99,
+      "newPrice": 25.99
+    },
+    {
+      "_id": 12,
+      "title": "andromeda",
+      "description": " writen by Dr. Rodas Tadesse and Dr. Getenet Feleke  the book more tell about the galaxies ",
+      "category": "education",
+      "trending": true,
+      "coverImage": "education3.jpgg",
+      "oldPrice": 19.99,
+      "newPrice": 9.99
+    },
+    {
+      "_id": 13,
+      "title": "Ethiopian Grade 12 Mathematics Student Textbook",
+      "description": "Ethiopian geography textbook for 10th grade, in English. This can be downloaded from the Ethiopian government's website",
+      "category": "education",
+      "trending": true,
+      "coverImage": "education4.jpg",
+      "oldPrice": 26.99,
+      "newPrice": 21.99
+    },
+    {
+      "_id": 14,
+      "title": "Extreme English Grade 5-8",
+      "description": "The book provides additional support for the regular textbook by explaining concepts more clearly and offering extra examples to help students understand the material better.",
+      "category": "education",
+      "trending": false,
+      "coverImage": "education5.jpg",
+      "oldPrice": 34.99,
+      "newPrice": 24.99
+    },
+    {
+      "_id": 15,
+      "title": "Extreme chemistry  Grade 9-10",
+      "description": "The book provides additional support for the regular textbook by explaining concepts more clearly and offering extra examples to help students understand the material better.",
+      "category": "education",
+      "trending": false,
+      "coverImage": "education6.jpg",
+      "oldPrice": 22.99,
+      "newPrice": 12.99
+    },
+    {
+      "_id": 16,
+      "title": "grade 11-12 Exam book ",
+      "description": "The exam book is used to help students prepare for exams by providing practice questions and review exercises.",
+      "category": "education",
+      "trending": false,
+      "coverImage": "education7.jpg",
+      "oldPrice": 24.99,
+      "newPrice": 19.99
+    },
+    {
+      "_id": 17,
+      "title": "Smart Technology",
+      "description": "Information technology: An introduction for today’s Digital world introduces students to a wide Varity of concepts that they will encounter throughout their Information Technology studies and Careers.",
+      "category": "technology",
+      "trending": true,
+      "coverImage": "tech1.jpg",
+      "oldPrice": 49.99,
+      "newPrice": 39.99
+    },
+    {
+      "_id": 18,
+      "title": "Information Technology and Systems",
+      "description": "This book is composed by the papers written in English and accepted for presentation and discussion at The 2022 International Conference on Information Technology & Systems (ICITS'22), held at Tecnológico de Costa Rica, in San Carlos, Costa Rica, between the 9th and the 11th of February 2022.",
+      "category": "technology",
+      "trending": true,
+      "coverImage": "tech2.jpg",
+      "oldPrice": 18.99,
+      "newPrice": 12.99
+    },
+    {
+      "_id": 19,
+      "title": "Computers & Information Technology",
+      "description": "Introduction to Computers and Information Technology teaches essential computer technology concepts and skills.",
+      "category": "technology",
+      "trending": true,
+      "coverImage": "tech3.jpg",
+      "oldPrice": 35.99,
+      "newPrice": 27.99
+    },
+    {
+      "_id": 20,
+      "title": "Technology vs Humanity",
+      "description": "echnology vs. Humanity is a last-minute wake up call to take part in the most important conversation humanity may ever have. ",
+      "category": "technology",
+      "trending": false,
+      "coverImage": "tech4.png",
+      "oldPrice": 24.99,
+      "newPrice": 14.99
+    },
+    {
+      "_id": 21,
+      "title": "Junior Cycle Applied Technology",
+      "description": "Applied Technology refers to the practical use of scientific knowledge, engineering principles, and technical skills to solve real-world problems and improve products, systems, or processes",
+      "category": "technology",
+      "trending": false,
+      "coverImage": "tech5.jpg",
+      "oldPrice": 20.99,
+      "newPrice": 10.99
+    },
+    {
+      "_id": 22,
+      "title": "The Psychology of Technology",
+      "description": "This book examines research from different subdisciplines across psychology to address the ways in which technology and Big Data provide a unique window into human cognition and behavior.",
+      "category": "technology",
+      "trending": false,
+      "coverImage": "tech6.jpg",
+      "oldPrice": 28.99,
+      "newPrice": 14.99
+    },
+    {
+      "_id": 23,
+      "title": "Cyberlibertarianism",
+      "description": "Cyberlibertarianism is the belief that the internet should remain free from government control, emphasizing individual freedom, free speech, privacy, and minimal regulation in digital spaces.",
+      "category": "technology",
+      "trending": false,
+      "coverImage": "tech7.jpg",
+      "oldPrice": 22.99,
+      "newPrice": 16.99
+    },
+    {
+      "_id": 24,
+      "title": "Technology Governance ",
+      "description": "Technology Governance is a practical guide for senior business and technology leaders implementing a digital trust-based technology governance framework that mitigates risk and furthers innovation in their organization.",
+      "category": "technology",
+      "trending": false,
+      "coverImage": "tech8.jpg",
+      "oldPrice": 40.99,
+      "newPrice": 20.99
+    },
+    {
+      "_id": 25,
+      "title": "Science and Technology",
+      "description": "Science and Technology explores questions around the central concepts of STEM fields: How do we interact with science and technology on a daily basis?",
+      "category": "technology",
+      "trending": false,
+      "coverImage": "tech9.jpg",
+      "oldPrice": 24.99,
+      "newPrice": 14.99
+    },
+    {
+      "_id": 26,
+      "title": "The Politics of Ethnicity in Ethiopia ",
+      "description": " The one prominent exception is Ethiopia, which since 1991 has imposed a system of ethnic-based federalism that offers each ethnic group the right of ‘self-determination’. ",
+      "category": "politic ",
+      "trending": false,
+      "coverImage": "pol1.jpg",
+      "oldPrice": 15.99,
+      "newPrice": 10.99
+    },
+    {
+      "_id": 27,
+      "title": "A Political History of the Tigray Peoples Liberation",
+      "description": " is a comprehensive and critical study that seamlessly integrates the theoretical issues of ethnic self-determination with real life events, processes, and empirical observations of the complex history of the TPLF. ",
+      "category": "politic ",
+      "trending": false,
+      "coverImage": "pol2.jpg",
+      "oldPrice": 35.99,
+      "newPrice": 17.99
+    },
+    {
+      "_id": 28,
+      "title": "Inside the Political Mind ",
+      "description": "Drawing on his experience of working with hundreds of politicians in more than sixty countries, Greg Power explores how social norms, public expectations and the personal interests of MPs influence the path of political development.",
+      "category": "politic ",
+      "trending": false,
+      "coverImage": "pol3.jpg",
+      "oldPrice": 20.99,
+      "newPrice": 22.99
+    },
+    {
+      "_id": 29,
+      "title": "Politics On the Edge",
+      "description": "Politics On the Edge invites us into the mind of one of the most interesting actors on the British political stage. Uncompromising, candid and darkly humorous, this is his story of the challenges, absurdities and realities of political life.",
+      "category": "politic ",
+      "trending": false,
+      "coverImage": "pol4.jpg",
+      "oldPrice": 24.99,
+      "newPrice": 14.99
+    },
+    {
+      "_id":30,
+      "title": "The Body Politic by Brian Platzer",
+      "description": "In the bestselling tradition of The Interestings and A Little Life, this keenly felt and expertly written novel by the author of the “savvy, heartfelt, and utterly engaging” (Alice McDermott) Bed-Stuy Is Burning follows four longtime friends as they navigate love, commitment, and forgiveness while the world around them changes beyond recognition.",
+      "category": "politic ",
+      "trending": false,
+      "coverImage": "pol5.jpg",
+      "oldPrice": 21.99,
+      "newPrice": 11.99
+    }
+  ]
+  
+
+
+
+
+
+
+
+
+  
