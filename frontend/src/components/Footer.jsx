@@ -1,6 +1,6 @@
 import React from 'react'
 import footerLogo  from "../assets/footer-logo.png"
-
+import { Link } from 'react-router-dom'; // Import Link
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
 
 const Footer = () => {
@@ -12,10 +12,10 @@ const Footer = () => {
         <div className="md:w-1/2 w-full">
           <img src={footerLogo} alt="Logo" className="mb-5 w-36" />
           <ul className="flex flex-col md:flex-row gap-4">
-            <li><a href="#home" className="hover:text-primary">Home</a></li>
-            <li><a href="#services" className="hover:text-primary">Services</a></li>
-            <li><a href="#about" className="hover:text-primary">About Us</a></li>
-            <li><a href="#contact" className="hover:text-primary">Contact</a></li>
+            <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
+            <li><Link to="/orders" className="hover:text-primary transition-colors">Services</Link></li>
+            <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
+            <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
           </ul>
         </div>
 
@@ -28,9 +28,9 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-2 rounded-l-md text-black"
+              className="w-full px-4 py-2 rounded-l-md text-black focus:outline-none"
             />
-            <button className="bg-primary px-6 py-2 rounded-r-md hover:bg-primary-dark">
+            <button className="bg-primary px-6 py-2 rounded-r-md hover:bg-primary-dark transition-colors font-medium">
               Subscribe
             </button>
           </div>
@@ -39,21 +39,25 @@ const Footer = () => {
 
       {/* Bottom Section */}
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center mt-10 border-t border-gray-700 pt-6">
-        {/* Left Side - Privacy Links */}
+        {/* Left Side - Privacy Links (FIXED) */}
         <ul className="flex gap-6 mb-4 md:mb-0">
-          <li><a href="#privacy" className="hover:text-primary">Privacy Policy</a></li>
-          <li><a href="#terms" className="hover:text-primary">Terms of Service</a></li>
+          <li>
+             <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+          </li>
+          <li>
+             <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+          </li>
         </ul>
 
         {/* Right Side - Social Icons */}
         <div className="flex gap-6">
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
             <FaFacebook size={24} />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
             <FaTwitter size={24} />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
             <FaInstagram size={24} />
           </a>
         </div>

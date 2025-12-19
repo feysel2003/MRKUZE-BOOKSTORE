@@ -1,105 +1,106 @@
-import React from 'react'
-// Import Swiper React components
+import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-// import required modules
 import { Pagination, Navigation } from 'swiper/modules';
 
-import news1 from "../../assets/news/news-1.png"
-import news2 from "../../assets/news/news-2.png"
-import news3 from "../../assets/news/news-3.png"
-import news4 from "../../assets/news/news-4.png"
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const news = [
-    {
-        "id": 1,
-        "title": "Global Climate Summit Calls for Urgent Action",
-        "description": "World leaders gather at the Global Climate Summit to discuss urgent strategies to combat climate change, focusing on reducing carbon emissions and fostering renewable energy solutions.",
-        "image": news1
-    },
-    {
-        "id": 2,
-        "title": "Breakthrough in AI Technology Announced",
-        "description": "A major breakthrough in artificial intelligence has been announced by researchers, with new advancements promising to revolutionize industries from healthcare to finance.",
-        "image": news2
-    },
-    {
-        "id": 3,
-        "title": "New Space Mission Aims to Explore Distant Galaxies",
-        "description": "NASA has unveiled plans for a new space mission that will aim to explore distant galaxies, with hopes of uncovering insights into the origins of the universe.",
-        "image": news3
-    },
-    {
-        "id": 4,
-        "title": "Stock Markets Reach Record Highs Amid Economic Recovery",
-        "description": "Global stock markets have reached record highs as signs of economic recovery continue to emerge following the challenges posed by the global pandemic.",
-        "image": news4
-    },
-    {
-        "id": 5,
-        "title": "Innovative New Smartphone Released by Leading Tech Company",
-        "description": "A leading tech company has released its latest smartphone model, featuring cutting-edge technology, improved battery life, and a sleek new design.",
-        "image": news2
-    }
-]
+// Default image (keep your import)
+import news1 from "../../assets/news/news-1.png"
 
 const News = () => {
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const apiKey = import.meta.env.VITE_NEWS_API_KEY;
+        
+        // Updated Query: books AND technology (relevant for students)
+        const response = await axios.get(`https://newsapi.org/v2/everything?q=books+technology&language=en&sortBy=publishedAt&pageSize=10&apiKey=${apiKey}`);
+        
+        setNews(response.data.articles);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    }
+
+    fetchNews();
+  }, []);
+
   return (
     <div className='py-16'>
         <h2 className='text-3xl font-semibold mb-6'>
             News
         </h2>
 
-<Swiper
-        slidesPerView={1}
-        spaceBetween={30}
-        navigation={true}
-        breakpoints={{
-          640: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 40,
-          },
-          1024: {
-            slidesPerView: 2,
-            spaceBetween: 50,
-          },
-        }}
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
-        
-        {
-          news.map((item, index) =>(
-            <SwiperSlide>
-              <div className='flex flex-col sm:flex-row sm:justify-between items-center gap-12'>
-                {/* content */}
-                <div className='py-4'>
-                  <Link to="/">
-                  <h3 className='text-lg font-medium hover:text-blue-500 mb-4'>
-                    {item.title}
-                  </h3>
-                  </Link>
-                  <div className='w-12 h-[4px] bg-primary mb-5'></div>
-                  <p className='text-sm text-gray-600'>{item.description}</p>
-                </div>
-                <div className='flex-shrink-0'>
-                  <img src={item.image} alt="" className="w-full object-cover"/>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))
-        }
-      </Swiper>
-
+        <Swiper
+            slidesPerView={1}
+            spaceBetween={30}
+            navigation={true}
+            breakpoints={{
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 2,
+                    spaceBetween: 50,
+                },
+            }}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+        >
+            
+            {news.length > 0 ? (
+                news.map((item, index) => (
+                    <SwiperSlide key={index}>
+                        <div className='flex flex-col sm:flex-row sm:justify-between items-center gap-12'>
+                            {/* content */}
+                            <div className='py-4'>
+                                <Link to={item.url} target="_blank" rel="noopener noreferrer">
+                                    <h3 className='text-lg font-medium hover:text-blue-500 mb-4'>
+                                        {item.title}
+                                    </h3>
+                                </Link>
+                                <div className='w-12 h-[4px] bg-primary mb-5'></div>
+                                <p className='text-sm text-gray-600'>
+                                    {/* Truncate description slightly to keep design consistent if text is huge */}
+                                    {item.description && item.description.length > 120 
+                                        ? `${item.description.substring(0, 120)}...` 
+                                        : item.description}
+                                </p>
+                            </div>
+                            
+                            {/* Image - Kept your exact classes */}
+                            <div className='flex-shrink-0'>
+                                <img 
+                                    src={item.urlToImage || news1} 
+                                    alt={item.title} 
+                                    className="w-full object-cover"
+                                    // Added a small inline style to mimic your static image size if API images are too huge
+                                    // You can remove style={{ maxWidth: '150px' }} if you want them full size
+                                    style={{ maxWidth: '100%', maxHeight: '150px', width: 'auto' }} 
+                                    onError={(e) => { e.target.src = news1; }}
+                                />
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                ))
+            ) : (
+                // Optional: Show your dummy data or loading state if API fails
+                <div className='text-gray-500'>Loading news...</div>
+            )}
+        </Swiper>
     </div>
   )
 }

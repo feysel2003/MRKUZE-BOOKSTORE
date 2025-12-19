@@ -17,6 +17,10 @@ import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import ManageOrders from "../pages/dashboard/manageorders/ManageOrders";
 import ManageAdmin from "../pages/dashboard/Admin/ManageAdmin";
+import PrivacyPolicy from "../pages/home/PrivacyPolicy";
+import TermsOfService from "../pages/home/TermsOfService";
+import Contact from "../pages/home/Contact";
+import About from "../pages/home/About";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +31,23 @@ const router = createBrowserRouter([
                 path: "/",
                 element: <Home/>,
             },
+            {
+                path: "/privacy",
+                element: <PrivacyPolicy/>
+            },
+            {
+                path: "/terms",
+                element: <TermsOfService/>
+            },
+            {
+                path: "/contact",
+                element: <Contact/>
+            },
+            {
+                path: "/about",
+                element: <About/>
+            },
+            
              {
                 path: "/orders",
                 element: <PrivateRoute>
