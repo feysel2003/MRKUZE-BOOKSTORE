@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'; 
-import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa"; // 1. Import Eye Icons
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Removed FaGoogle as we use SVG now
 import { useForm } from "react-hook-form"
 import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
     const [message, setMessage] = useState("");
-    const [showPassword, setShowPassword] = useState(false); // 2. State for toggle
+    const [showPassword, setShowPassword] = useState(false); 
     const { registerUser, signInWithGoogle } = useAuth();
     const navigate = useNavigate(); 
 
@@ -39,13 +39,12 @@ const Register = () => {
     const strength = getPasswordStrength(passwordValue);
 
     const onSubmit = async (data) => {
-        setMessage(""); // Clear previous errors
+        setMessage(""); 
         try {
             await registerUser(data.email, data.password);
             alert("User Registered successfully!");
             navigate("/"); 
         } catch (error) {
-            // 3. Specific Firebase Error Handling
             console.error("Registration Error:", error.code);
             switch (error.code) {
                 case 'auth/email-already-in-use':
@@ -109,7 +108,6 @@ const Register = () => {
                             Password
                         </label>
                         
-                        {/* 4. Password Input Wrapper for Show/Hide Icon */}
                         <div className="relative">
                             <input
                                 {...register("password", { 
@@ -119,7 +117,6 @@ const Register = () => {
                                         message: "Password must be at least 6 characters"
                                     }
                                 })}
-                                // Toggle between text and password
                                 type={showPassword ? "text" : "password"} 
                                 name='password' 
                                 id='password' 
@@ -127,7 +124,6 @@ const Register = () => {
                                 className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow pr-10 ${errors.password ? 'border-red-500' : ''}`} 
                             />
                             
-                            {/* Toggle Button */}
                             <button 
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
@@ -171,15 +167,24 @@ const Register = () => {
                     Have an account? Please <Link to="/login" className="text-blue-500 hover:text-blue-700">Login</Link>
                 </p>
 
-                {/* Google Sign In */}
+                {/* --- OFFICIAL GOOGLE SIGN IN BUTTON --- */}
                 <div className='mt-4'>
                     <button
                         onClick={handleGoogleSignIn}
-                        className='w-full flex flex-wrap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none'>
-                        <FaGoogle className='mr-2' />
-                        sign in with Google
+                        className="w-full flex items-center justify-center bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                        style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                        {/* Official Google "G" Logo SVG */}
+                        <svg className="w-5 h-5 mr-3" viewBox="0 0 48 48">
+                            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.25 5.33-4.77 6.81l7.98 6.19c4.64-4.32 7.32-10.14 7.32-17.45z" />
+                            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.28-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.98 6.19c.48-1.45.76-2.99.76-4.59z" />
+                            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.98-6.19c-2.25 1.54-5.02 2.48-7.91 2.48-6.23 0-11.53-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                        </svg>
+                        Sign in with Google
                     </button>
                 </div>
+                
                 <p className='mt-5 text-center text-gray-500 text-xs'>&copy;2025 Mrkuze Book Store. All right reserved.</p>
             </div>
         </div>
