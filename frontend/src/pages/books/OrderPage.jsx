@@ -70,7 +70,7 @@ const OrderPage = () => {
                                 <div>
                                     <h3 className="font-semibold text-gray-700 mb-2">Payment Info</h3>
                                     <p className="text-gray-600 text-sm"><strong>Method:</strong> {order.paymentMethod?.toUpperCase()}</p>
-                                    <p className="text-gray-800 font-bold text-lg mt-2">Total: ${order.totalPrice.toFixed(2)}</p>
+                                    <p className="text-gray-800 font-bold text-lg mt-2">Total: Birr. {order.totalPrice.toFixed(2)}</p>
                                 </div>
                             </div>
 

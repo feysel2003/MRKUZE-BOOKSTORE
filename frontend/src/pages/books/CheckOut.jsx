@@ -106,7 +106,7 @@ const CheckOut = () => {
                             <h2 className="font-semibold text-xl text-gray-600 mb-4">Order Summary</h2>
                             <div className="flex justify-between mb-2">
                                 <span className="text-gray-500">Items ({cartItems.length}):</span>
-                                <span className="text-gray-900 font-bold">${totalPrice}</span>
+                                <span className="text-gray-900 font-bold">Birr. {totalPrice}</span>
                             </div>
                             <hr className="my-4" />
                             
@@ -154,7 +154,7 @@ const CheckOut = () => {
                                 {paymentMethod === 'bank' && (
                                     <div className="bg-purple-50 p-4 rounded-lg mb-6 border border-purple-200">
                                         <h4 className="font-bold text-purple-700 mb-2">Upload Payment Screenshot</h4>
-                                        <p className="text-sm text-gray-600 mb-3">Please transfer <b>${totalPrice}</b> and upload receipt.</p>
+                                        <p className="text-sm text-gray-600 mb-3">Please transfer <b>Birr. {totalPrice}</b> and upload receipt.</p>
                                         <input 
                                             {...register("screenshot", { required: true })}
                                             type="file" 

@@ -82,7 +82,7 @@ const ManageOrders = () => {
                                             <span className="text-gray-400 font-normal">{order.email}</span>
                                         </td>
                                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            ${order.totalPrice}
+                                            Birr. {order.totalPrice}
                                         </td>
                                         
                                         {/* Payment Method Column */}

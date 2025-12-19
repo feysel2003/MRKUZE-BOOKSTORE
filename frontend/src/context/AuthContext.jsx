@@ -1,14 +1,24 @@
 import {  createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { 
+    createUserWithEmailAndPassword, 
+    GoogleAuthProvider, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signInWithPopup, 
+    signOut,
+    sendPasswordResetEmail // 1. IMPORT THIS
+} from "firebase/auth";
 
 const AuthContext = createContext();
+
 export const useAuth = () => {
     return useContext(AuthContext)
 }
 
 const googleProvider = new GoogleAuthProvider();
 
+// authProvider
 export const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -28,26 +38,25 @@ export const AuthProvider = ({children}) => {
         return await signInWithPopup(auth, googleProvider)
     }
 
-    // --- FIX: Update Logout to clear Admin Data ---
+    // logout the user
     const logout = () => {
         localStorage.removeItem('token'); // Clear Admin Token
         localStorage.removeItem('role');  // Clear Admin Role
         return signOut(auth);             // Sign out from Firebase
     }
-    // ----------------------------------------------
+
+    // 2. ADD RESET PASSWORD FUNCTION
+    const resetPassword = async (email) => {
+        return await sendPasswordResetEmail(auth, email);
+    }
 
     // manage user
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
             setLoading(false);
-
-            if(user) {
-                const {email, displayName, photoURL} = user;
-                const userData = {
-                    email, username: displayName, photo: photoURL
-                }
-            }
+            
+            // Removed unused 'userData' block here for cleaner code
         })
         return () => unsubscribe();
     }, [])
@@ -58,8 +67,10 @@ export const AuthProvider = ({children}) => {
         registerUser,
         loginUser,
         signInWithGoogle,
-        logout
+        logout,
+        resetPassword // 3. EXPORT IT HERE
     }
+
     return(
         <AuthContext.Provider value={value}>
             {children}

@@ -58,7 +58,7 @@ const Dashboard = () => {
                     </div>
                     <div>
                         <p className="mb-1 text-sm font-medium text-gray-500">Total Sales</p>
-                        <p className="text-2xl font-bold text-gray-800">${data?.totalSales.toFixed(2)}</p>
+                        <p className="text-2xl font-bold text-gray-800">Birr. {data?.totalSales.toFixed(2)}</p>
                     </div>
                 </div>
 
@@ -144,7 +144,7 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-sm font-bold text-gray-800">${order.totalPrice.toFixed(2)}</p>
+                                            <p className="text-sm font-bold text-gray-800">Birr. {order.totalPrice.toFixed(2)}</p>
                                             <p className="text-xs text-gray-400">Paid</p>
                                         </div>
                                     </li>

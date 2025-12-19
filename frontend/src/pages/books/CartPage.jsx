@@ -61,7 +61,7 @@ const CartPage = () => {
                         <h3>
                           <Link to='/'>{product?.title}</Link>
                         </h3>
-                        <p className="sm:ml-4">${product?.newPrice}</p>
+                        <p className="sm:ml-4">Birr. {product?.newPrice}</p>
                       </div>
                       <p className="mt-1 text-sm text-gray-500 capitalize"><strong>Category:</strong> {product.category}</p>
                     </div>
@@ -94,7 +94,7 @@ const CartPage = () => {
     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
       <div className="flex justify-between text-base font-medium text-gray-900">
         <p>Subtotal</p>
-        <p>${totalPrice}</p>
+        <p>Birr. {totalPrice}</p>
       </div>
       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
       <div className="mt-6">

@@ -3,10 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form"
 import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2'; // Use SweetAlert for the reset modal
 
 const Login = () => {
   const [message, setMessage] = useState()
-  const { loginUser, signInWithGoogle } = useAuth();
+  const { loginUser, signInWithGoogle, resetPassword } = useAuth(); // 1. Get resetPassword from context
   const navigate = useNavigate()
   const {
     register,
@@ -19,19 +20,33 @@ const Login = () => {
     try {
       await loginUser(data.email, data.password);
       
-      // --- FIX START: Force clear admin credentials ---
-      // This ensures if an admin was logged in before, their access is removed
-      // because this is a PUBLIC login.
+      // Force clear admin credentials to prevent role conflicts
       localStorage.removeItem('token');
       localStorage.removeItem('role');
-      // --- FIX END ---
+      localStorage.removeItem('username'); 
 
       alert("Login Successful!")
       navigate("/")
 
     } catch (error) {
-      setMessage("Please Provide Valid email and password")
-        console.error(error)
+      // 2. Specific Error Handling
+      console.error("Login Error:", error.code);
+      switch (error.code) {
+        case 'auth/invalid-credential':
+            setMessage("Invalid email or password. Please try again.");
+            break;
+        case 'auth/user-not-found':
+            setMessage("No account found with this email.");
+            break;
+        case 'auth/wrong-password':
+            setMessage("Incorrect password.");
+            break;
+        case 'auth/too-many-requests':
+            setMessage("Too many failed attempts. Please try again later.");
+            break;
+        default:
+            setMessage("Login failed. Please check your credentials.");
+      }
     }
   }
 
@@ -39,16 +54,50 @@ const Login = () => {
     try {
       await signInWithGoogle();
       
-      // --- FIX START: Force clear admin credentials for Google too ---
+      // Force clear admin credentials
       localStorage.removeItem('token');
       localStorage.removeItem('role');
-      // --- FIX END ---
+      localStorage.removeItem('username');
 
       alert("Login successful!");
       navigate("/")
     } catch (error) {
       alert("Google sign in failed!")
-        console.error(error)
+      console.error(error)
+    }
+  }
+
+  // 3. Logic for Forgot Password Modal
+  const handleForgotPassword = async () => {
+    const { value: email } = await Swal.fire({
+      title: 'Reset Password',
+      input: 'email',
+      inputLabel: 'Enter your email address',
+      inputPlaceholder: 'email@example.com',
+      showCancelButton: true,
+      confirmButtonText: 'Send Reset Link',
+      confirmButtonColor: "#3b82f6",
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to write your email!'
+        }
+      }
+    })
+
+    if (email) {
+      const cleanEmail = email.trim(); 
+      try {
+        await resetPassword(cleanEmail);
+        Swal.fire({
+            title: 'Sent!',
+            text: 'Password reset link has been sent to your email.',
+            icon: 'success',
+            confirmButtonColor: "#3b82f6"
+        });
+      } catch (error) {
+        console.error(error);
+        Swal.fire('Error', 'Failed to send reset link. Please check if the email is correct.', 'error');
+      }
     }
   }
 
@@ -66,7 +115,6 @@ const Login = () => {
 
                     <input 
                     {...register("email", { required: true })}
-
                     type="email" name='email' id='email' placeholder='Email Address' className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow' />
                 </div>
 
@@ -80,15 +128,27 @@ const Login = () => {
                     {...register("password", { required: true })}
                     type="password"  name='password' id='password' placeholder='password' className='shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow' />
                 </div>
+                
                 {
-                  message && <p className='text-red-500 text-xs italic mb-3'>{message}</p>
+                  message && <p className='text-red-500 text-xs italic mb-3 font-semibold'>{message}</p>
                 }
-                <div>
-                  <button className='bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-8 rounded focus:outline-none'>
-                  Login
-                  </button>
+                
+                <div className='flex flex-wrap space-y-2 justify-between items-center mb-4'>
+                    <button className='bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-8 rounded focus:outline-none'>
+                    Login
+                    </button>
+                    
+                    {/* 4. Forgot Password Link */}
+                    <button 
+                        type="button"
+                        onClick={handleForgotPassword}
+                        className='text-sm text-blue-500 hover:text-blue-800 underline focus:outline-none'
+                    >
+                        Forgot Password?
+                    </button>
                 </div>
             </form>
+            
             <p className='align-baseline font-medium mt-4 text-sm'>Haven't an account? Please <Link to="/register" className="text-blue-500 hover:text-blue-700">Register</Link></p>
 
             {/*google sign in  */}
