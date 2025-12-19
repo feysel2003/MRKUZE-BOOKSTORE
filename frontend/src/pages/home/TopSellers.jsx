@@ -8,13 +8,18 @@ import 'swiper/css/navigation';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 // Import hooks
 import { useSearchParams, useNavigate } from 'react-router-dom';
+// Import Icons
+import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 
 const categories = ["choose a genre", "Business", "Fiction", "Educational", "Adventure"]
 
 const TopSellers = () => {
     const [selectedCategory, setSelectedCategory] = useState("choose a genre");
     
-    // 1. Get search params
+    // 1. Navigation State for Swiper
+    const [prevEl, setPrevEl] = useState(null);
+    const [nextEl, setNextEl] = useState(null);
+
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get("search") || ""; 
     const navigate = useNavigate();
@@ -33,19 +38,16 @@ const TopSellers = () => {
         return categoryMatch && searchMatch;
     });
 
-    // 2. Function to clear search
     const handleClearSearch = () => {
-        navigate('/'); // This removes ?search=... from URL
+        navigate('/'); 
     }
 
     return (
-        // 3. Add ID here for the Navbar scroll logic
         <div className='py-10' id="books-section">
             
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
                 <h2 className='text-3xl font-semibold'>Top Sellers</h2>
                 
-                {/* 4. Show Reset Button if searching */}
                 {searchQuery && (
                     <div className="flex items-center gap-2 mt-2 md:mt-0">
                         <p className="text-gray-500">
@@ -78,7 +80,8 @@ const TopSellers = () => {
                 <Swiper
                     slidesPerView={1}
                     spaceBetween={30}
-                    navigation={true}
+                    // 2. Link Navigation to State
+                    navigation={{ prevEl, nextEl }}
                     breakpoints={{
                         640: { slidesPerView: 1, spaceBetween: 20 },
                         768: { slidesPerView: 2, spaceBetween: 40 },
@@ -86,13 +89,36 @@ const TopSellers = () => {
                         1180: { slidesPerView: 3, spaceBetween: 50 }
                     }}
                     modules={[Pagination, Navigation]}
-                    className="mySwiper"
+                    className="mySwiper relative" // Relative for absolute buttons
                 >
                     {filteredBooks.map((book, index) => (
                         <SwiperSlide key={index}>
                             <BookCard book={book} />
                         </SwiperSlide>
                     ))}
+
+                    {/* --- 3. Custom Overlay Buttons --- */}
+                    
+                    {/* Prev Button */}
+                    <button 
+                        ref={(node) => setPrevEl(node)}
+                        className='absolute top-1/2 left-0 transform -translate-y-1/2 z-10 p-2 rounded-full bg-primary text-white hover:bg-blue-700 transition-all duration-200 shadow-lg focus:outline-none'
+                        aria-label="Previous Slide"
+                        style={{ marginLeft: '-10px' }} 
+                    >
+                        <HiOutlineArrowLeft className='size-6'/>
+                    </button>
+
+                    {/* Next Button */}
+                    <button 
+                        ref={(node) => setNextEl(node)}
+                        className='absolute top-1/2 right-0 transform -translate-y-1/2 z-10 p-2 rounded-full bg-primary text-white hover:bg-blue-700 transition-all duration-200 shadow-lg focus:outline-none'
+                        aria-label="Next Slide"
+                        style={{ marginRight: '-10px' }}
+                    >
+                        <HiOutlineArrowRight className='size-6'/>
+                    </button>
+
                 </Swiper>
             ) : (
                 <div className="text-center py-20 text-gray-500 flex flex-col items-center">
