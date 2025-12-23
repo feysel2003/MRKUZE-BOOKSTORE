@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCreateOrderMutation } from '../../redux/features/orders/orderApi';
 import Swal from 'sweetalert2';
 import { FaMoneyBillWave, FaCreditCard, FaFileUpload } from "react-icons/fa";
-import axios from 'axios'; // Ensure axios is installed (npm install axios)
+import axios from 'axios'; 
 
 const CheckOut = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
@@ -25,16 +25,21 @@ const CheckOut = () => {
     } = useForm();
 
     // --- CLOUDINARY CONFIGURATION ---
-    // Replace these with your actual values from Step 1
     const cloud_name = "dosln7f10"; 
     const upload_preset = "mrkuze_bookstore_preset";
 
     const onSubmit = async (data) => {
         let paymentProofUrl = "";
 
-        // 1. Upload Logic using Cloudinary (No Firebase needed)
+        // Prevent submission if Card is selected (Just in case)
+        if(paymentMethod === 'card') {
+            alert("Card payment is unavailable.");
+            return;
+        }
+
+        // 1. Upload Logic using Cloudinary
         if (paymentMethod === 'bank') {
-            const file = data.screenshot[0];
+            const file = data.screenshot?.[0];
             if (!file) {
                 alert("Please upload a screenshot for Bank Transfer.");
                 return;
@@ -45,7 +50,6 @@ const CheckOut = () => {
             formData.append("upload_preset", upload_preset);
 
             try {
-                // Post directly to Cloudinary API
                 const response = await axios.post(
                     `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, 
                     formData
@@ -73,7 +77,7 @@ const CheckOut = () => {
             productIds: cartItems.map(item => item?._id),
             totalPrice: totalPrice,
             paymentMethod: paymentMethod,
-            paymentProof: paymentProofUrl // The Cloudinary URL
+            paymentProof: paymentProofUrl 
         }
 
         // 3. Save to Database
@@ -150,24 +154,53 @@ const CheckOut = () => {
                                     <div className="md:col-span-1"><label>Zipcode</label><input {...register("zipcode", { required: true })} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" /></div>
                                 </div>
 
-                                {/* Bank Transfer Upload UI */}
+                                {/* --- Bank Transfer UI (Updated) --- */}
                                 {paymentMethod === 'bank' && (
                                     <div className="bg-purple-50 p-4 rounded-lg mb-6 border border-purple-200">
-                                        <h4 className="font-bold text-purple-700 mb-2">Upload Payment Screenshot</h4>
-                                        <p className="text-sm text-gray-600 mb-3">Please transfer <b>Birr. {totalPrice}</b> and upload receipt.</p>
+                                        <h4 className="font-bold text-purple-700 mb-4 flex items-center gap-2">
+                                            <FaMoneyBillWave/> Bank Account Details
+                                        </h4>
+                                        
+                                        {/* Account Info Box */}
+                                        <div className="bg-white p-4 rounded-md shadow-sm mb-4 border border-purple-100 space-y-3">
+                                            <div className="flex flex-col sm:flex-row justify-between border-b border-gray-100 pb-2">
+                                                <span className="font-semibold text-gray-600">Commercial Bank of Ethiopia (CBE)</span>
+                                                <span className="font-mono font-bold text-gray-800 tracking-wide">10001234567</span>
+                                            </div>
+                                            <div className="flex flex-col sm:flex-row justify-between border-b border-gray-100 pb-2">
+                                                <span className="font-semibold text-gray-600">Awash Bank</span>
+                                                <span className="font-mono font-bold text-gray-800 tracking-wide">01234567891</span>
+                                            </div>
+                                            <div className="flex flex-col sm:flex-row justify-between">
+                                                <span className="font-semibold text-gray-600">Telebirr</span>
+                                                <span className="font-mono font-bold text-gray-800 tracking-wide">+251 962 080 847</span>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-sm text-gray-600 mb-3">
+                                            Please transfer <b>Birr. {totalPrice}</b> to one of the accounts above and upload the receipt screenshot below.
+                                        </p>
+                                        
                                         <input 
                                             {...register("screenshot", { required: true })}
                                             type="file" 
                                             accept="image/*"
-                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200"
+                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200 transition-all cursor-pointer"
                                         />
                                     </div>
                                 )}
 
+                                {/* --- Credit Card UI (Updated) --- */}
                                 {paymentMethod === 'card' && (
-                                    <div className="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-200">
-                                        <h4 className="font-bold text-blue-700 mb-2">Credit Card (Demo)</h4>
-                                        <input placeholder="Card Number" className="h-10 border rounded px-4 w-full bg-white" />
+                                    <div className="bg-red-50 p-6 rounded-lg mb-6 border border-red-200 text-center">
+                                        <div className="flex justify-center mb-2 text-red-500">
+                                            <FaCreditCard className="text-4xl" />
+                                        </div>
+                                        <h4 className="font-bold text-red-700 mb-2">Service Unavailable</h4>
+                                        <p className="text-sm text-red-600 font-medium">
+                                            Card payments are not working right now. <br/>
+                                            Please select <b>Cash on Delivery</b> or <b>Bank Transfer</b>.
+                                        </p>
                                     </div>
                                 )}
 
@@ -179,8 +212,16 @@ const CheckOut = () => {
                                 </div>
 
                                 <div className="mt-6">
-                                    <button disabled={!isChecked} className={`w-full font-bold py-3 px-4 rounded transition-colors ${isChecked ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}>
-                                        Place Order (${totalPrice})
+                                    {/* Disable button if Terms not checked OR if Payment method is 'card' */}
+                                    <button 
+                                        disabled={!isChecked || paymentMethod === 'card'} 
+                                        className={`w-full font-bold py-3 px-4 rounded transition-colors 
+                                            ${(isChecked && paymentMethod !== 'card') 
+                                                ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                                                : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`
+                                        }
+                                    >
+                                        Place Order (Birr. {totalPrice})
                                     </button>
                                 </div>
                             </form>

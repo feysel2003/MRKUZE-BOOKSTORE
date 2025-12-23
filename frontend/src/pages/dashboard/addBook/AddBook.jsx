@@ -3,7 +3,7 @@ import SelectField from './SelectField'
 import { useForm } from 'react-hook-form';
 import { useAddBookMutation } from '../../../redux/features/books/booksApi';
 import Swal from 'sweetalert2';
-import InputField from './inputField';
+import InputField from './InputField';
 
 const AddBook = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -77,8 +77,8 @@ const AddBook = () => {
             { value: 'business', label: 'Business' },
             { value: 'technology', label: 'Technology' },
             { value: 'fiction', label: 'Fiction' },
-            { value: 'horror', label: 'Horror' },
-            { value: 'adventure', label: 'Adventure' },
+            { value: 'education', label: 'Education' },
+            { value: 'politic', label: 'Politic' }
             // Add more options as needed
           ]}
           register={register}

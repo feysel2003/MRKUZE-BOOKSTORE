@@ -18,11 +18,12 @@ const createAOrder = async (req, res) => {
 const getOrderByEmail = async (req, res) => {
    try {
     const {email} = req.params;
-    const orders = await Order.find({email})
-    .populate('productIds', 'title coverImage') 
-    .sort({createdAt: -1});
-    if(!orders) {
-        return res.status(404).json({message: "Order not found"});
+    // FIX: Removed .populate('productIds', 'title coverImage')
+    // Order Service should not know about the Book model structure.
+    const orders = await Order.find({email}).sort({createdAt: -1}); 
+    
+    if(!orders || orders.length === 0) { // Check for empty array too
+        return res.status(404).json({message: "Orders not found for this email"});
     }
     res.status(200).json({orders});
 
@@ -30,7 +31,6 @@ const getOrderByEmail = async (req, res) => {
     console.error("error fetching order", error);
         res.status(500).json({message: "Failed to fetch order"});
    }
-
 }
 
 const getAllOrders = async (req, res) => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { HiMiniBars3CenterLeft, HiXMark } from "react-icons/hi2"; // Imported HiX for close button
+import { HiMiniBars3CenterLeft, HiXMark } from "react-icons/hi2";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineShoppingCart, HiOutlineUser } from "react-icons/hi";
 import { HiOutlineHeart } from "react-icons/hi";
@@ -17,7 +17,7 @@ const navigation = [
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // 1. Sidebar State
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
   const [searchQuery, setSearchQuery] = useState(""); 
   
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logout();
-    setIsSidebarOpen(false); // Close sidebar on logout
+    setIsSidebarOpen(false); 
   }
 
   const handleSearch = (e) => {
@@ -51,15 +51,30 @@ const Navbar = () => {
         <nav className="flex justify-between items-center">
 
           {/* Left side */}
-          <div className='flex items-center md:gap-16 gap-4'>
+          {/* Changed md:gap-16 to md:gap-6 to make space for the Logo without breaking layout */}
+          <div className='flex items-center md:gap-6 gap-4'>
             
-            {/* 2. Hamburger Button (Trigger) */}
+            {/* Hamburger Button */}
             <button 
               onClick={() => setIsSidebarOpen(true)}
               className="focus:outline-none text-gray-700 hover:text-primary transition-colors"
             >
               <HiMiniBars3CenterLeft className='size-6' />
             </button>
+
+            {/* --- NEW SITE NAME LOGO --- */}
+            <Link to="/" className="flex items-center gap-1">
+                {/* 'Mrkuze' in Dark Gray */}
+                <span className="font-bold text-xl tracking-tight text-gray-800">
+                    Mrkuze
+                </span>
+                {/* 'BookStore' in Primary Color (Yellow/Gold/Purple depending on your config) */}
+                {/* Hidden on very small screens to prevent breaking search bar layout */}
+                <span className="font-bold text-xl tracking-tight text-primary hidden sm:block">
+                    BookStore
+                </span>
+            </Link>
+            {/* ------------------------- */}
 
             {/* Search */}
             <div className='relative sm:w-72 w-40 space-x-2'>
@@ -137,8 +152,7 @@ const Navbar = () => {
         </nav>
       </header>
 
-      {/* 3. SIDEBAR (Off-Canvas Menu) */}
-      {/* Overlay */}
+      {/* Sidebar (Off-Canvas Menu) */}
       {isSidebarOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
@@ -146,15 +160,16 @@ const Navbar = () => {
         ></div>
       )}
 
-      {/* Sidebar Panel */}
       <aside 
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="p-5 flex justify-between items-center border-b">
-          <Link to="/" onClick={() => setIsSidebarOpen(false)} className="text-xl font-bold text-gray-800">
-            BookStore
+          {/* Also updated Sidebar Logo for consistency */}
+          <Link to="/" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-1 font-bold text-xl">
+             <span className="text-gray-800">Mrkuze</span>
+             <span className="text-primary">BookStore</span>
           </Link>
           <button 
             onClick={() => setIsSidebarOpen(false)} 
@@ -166,7 +181,6 @@ const Navbar = () => {
 
         <div className="py-4">
           <ul className="space-y-2">
-            {/* Add Home Link specifically for sidebar */}
             <li>
               <Link 
                 to="/" 
@@ -177,7 +191,6 @@ const Navbar = () => {
               </Link>
             </li>
             
-            {/* Map through existing navigation */}
             {navigation.map((item) => (
               <li key={item.name}>
                 <Link 
@@ -191,7 +204,6 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* User Actions in Sidebar (Mobile friendly) */}
           <div className="border-t mt-4 px-6 py-4">
             {currentUser ? (
               <button 

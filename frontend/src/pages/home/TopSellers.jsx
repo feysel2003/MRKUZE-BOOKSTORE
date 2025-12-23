@@ -11,7 +11,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 // Import Icons
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
 
-const categories = ["choose a genre", "Business", "Fiction", "Educational", "Adventure"]
+const categories = ["choose a genre", "Business", "Fiction", "Education", "Technology", "Politic"]
 
 const TopSellers = () => {
     const [selectedCategory, setSelectedCategory] = useState("choose a genre");
