@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # 1. API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "5000:5000"
+    depends_on:
+      - auth-service
+      - product-service
+      - order-service
+    environment:
+      - PORT=5000
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - PRODUCT_SERVICE_URL=http://product-service:5002
+      - ORDER_SERVICE_URL=http://order-service:5003
+
+  # 2. Auth Service
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - DB_URL=${DB_URL}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+
+  # 3. Product Service (SCALED UP FOR LOAD BALANCING)
+  product-service:
+    build: ./product-service
+    # IMPORTANT: We removed "ports" because we can't bind 3 containers to localhost:5002
+    # You must access this service via the API Gateway (Port 5000)
+    deploy:
+      mode: replicated
+      replicas: 3 # <--- This runs 3 copies!
+    environment:
+      - PORT=5002
+      - DB_URL=${DB_URL}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+
+  # 4. Order Service
+  order-service:
+    build: ./order-service
+    ports:
+      - "5003:5003"
+    environment:
+      - PORT=5003
+      - DB_URL=${DB_URL}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+
+  # 5. Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_NEWS_API_KEY=${VITE_NEWS_API_KEY}
+      - VITE_FORMSPREE_ENDPOINT=${VITE_FORMSPREE_ENDPOINT}

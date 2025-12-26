@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate, NavLink } from 'react-router-dom';
 import { HiViewGridAdd } from "react-icons/hi";
 import { MdOutlineManageHistory } from "react-icons/md";
+import favIcon from '../../assets/fav-icon.png'; 
 // Removed useAuth import to prevent conflict
 
 const DashboardLayout = () => {
@@ -9,7 +10,7 @@ const DashboardLayout = () => {
   const [adminName, setAdminName] = useState("Admin"); // Local state for admin name
   const navigate = useNavigate();
 
-  // --- FIX: Load Admin Name from Local Storage ---
+  // Load Admin Name from Local Storage ---
   useEffect(() => {
     const storedName = localStorage.getItem("username");
     if(storedName) {
@@ -45,8 +46,8 @@ const DashboardLayout = () => {
       >
         {/* Logo Area */}
         <div className="flex items-center justify-center h-20 bg-purple-600 border-b border-purple-500">
-            <Link to="/" className='flex items-center gap-2 font-bold text-xl'>
-              <img src="/fav-icon.png" alt="Logo" className="w-8 h-8 filter brightness-0 invert" />
+            <Link to="/" className='flex items-center gap-2 font-bold text-xl text-white'>
+              <img src={favIcon} alt="Logo" className="bg-white p-1 rounded-full flex items-center justify-center" />
               <span>BookStore</span>
             </Link>
         </div>

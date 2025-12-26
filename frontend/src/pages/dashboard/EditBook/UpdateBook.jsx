@@ -7,7 +7,7 @@ import Loading from '../../../components/Loading';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import getBaseurl from '../../../utils/baseURL';
-import InputField from '../addBook/inputField';
+import InputField from '../addBook/InputField';
 
 const UpdateBook = () => {
   const { id } = useParams();

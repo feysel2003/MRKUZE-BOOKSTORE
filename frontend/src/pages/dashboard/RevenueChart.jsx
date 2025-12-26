@@ -29,7 +29,7 @@ const RevenueChart = ({ revenueData }) => {
     labels: labels,
     datasets: [
       {
-        label: 'Revenue (USD)',
+        label: 'Revenue (Birr)',
         data: datasets,
         backgroundColor: 'rgba(34, 197, 94, 0.7)', 
         borderColor: 'rgba(34, 197, 94, 1)',

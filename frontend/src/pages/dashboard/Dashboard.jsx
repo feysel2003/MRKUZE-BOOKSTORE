@@ -56,9 +56,10 @@ const Dashboard = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                         </svg>
                     </div>
-                    <div>
+                    <div className="flex-1 min-w-0">
                         <p className="mb-1 text-sm font-medium text-gray-500">Total Sales</p>
-                        <p className="text-2xl font-bold text-gray-800">Birr. {data?.totalSales.toFixed(2)}</p>
+                        {/* Fixed to 2 decimal places for better currency display */}
+                        <p className="text-2xl font-bold text-gray-800 break-all">Br. {data?.totalSales?.toFixed(2)}</p>
                     </div>
                 </div>
 
@@ -145,7 +146,16 @@ const Dashboard = () => {
                                         </div>
                                         <div className="text-right">
                                             <p className="text-sm font-bold text-gray-800">Birr. {order.totalPrice.toFixed(2)}</p>
-                                            <p className="text-xs text-gray-400">Paid</p>
+                                            
+                                            {/* --- UPDATED LOGIC: Show 'Paid' ONLY if status is completed --- */}
+                                            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                                                order.status === 'completed' 
+                                                    ? 'bg-green-100 text-green-700' 
+                                                    : 'bg-orange-100 text-orange-700'
+                                            }`}>
+                                                {order.status === 'completed' ? 'Paid' : order.status}
+                                            </span>
+                                            {/* ------------------------------------------------------------- */}
                                         </div>
                                     </li>
                                 ))
