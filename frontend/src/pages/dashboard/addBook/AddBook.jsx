@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import InputField from './InputField';
 
 const AddBook = () => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { error }, reset } = useForm();
     const [imageFile, setimageFile] = useState(null);
     const [addBook, {isLoading, isError}] = useAddBookMutation()
     const [imageFileName, setimageFileName] = useState('')

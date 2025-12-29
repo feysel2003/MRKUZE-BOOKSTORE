@@ -31,7 +31,6 @@ const BookCard = ({book}) => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:h-72 sm:justify-center gap-4 w-full">
         
         {/* --- Image Section --- 
-            FIX: Added 'sm:w-48' to lock the width. 
             This prevents the image from pushing the text out when the screen is wide.
         */}
         <div className="sm:h-72 sm:flex-shrink-0 sm:w-48 border rounded-md overflow-hidden relative"> 

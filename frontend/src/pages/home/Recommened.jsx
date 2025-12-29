@@ -21,14 +21,18 @@ const Recommened = () => {
   const { data: books = [], isLoading, isError } = useFetchAllBooksQuery();
   const [recommendedBooks, setRecommendedBooks] = useState([]);
 
-  // 1. FIX: Use useState for navigation elements instead of useRef
+  // Navigation State for Custom Buttons
   const [prevEl, setPrevEl] = useState(null);
   const [nextEl, setNextEl] = useState(null);
 
   useEffect(() => {
     if (books.length > 0) {
-        const shuffled = [...books].sort(() => 0.5 - Math.random());
-        setRecommendedBooks(shuffled.slice(0, 10));
+        //  Filter by 'Trending' flag ---
+        // Instead of random shuffle, we show books marked as 'Trending' by Admin
+        const trendingBooks = books.filter(book => book.trending === true);
+        
+        // Take the top 10 trending books
+        setRecommendedBooks(trendingBooks.slice(0, 10));
     }
   }, [books]);
 
@@ -36,7 +40,7 @@ const Recommened = () => {
   if (isError) return <div>Error fetching recommendations</div>;
 
   return (
-    <div className='py-16 relative'> {/* Added relative for absolute positioning of buttons */}
+    <div className='py-16 relative'> 
         
         <div className='flex justify-between items-center mb-6'>
             <h2 className='text-3xl font-semibold'>Recommended for you</h2>
@@ -45,7 +49,7 @@ const Recommened = () => {
         <Swiper
             slidesPerView={1}
             spaceBetween={30}
-            // 2. FIX: Link navigation to the state variables
+            // Link navigation to the state variables
             navigation={{
                 prevEl: prevEl,
                 nextEl: nextEl,
@@ -69,7 +73,7 @@ const Recommened = () => {
                 }
             }}
             modules={[Pagination, Navigation]}
-            className="mySwiper relative" // Ensure swiper is relative context
+            className="mySwiper relative"
         >
             {recommendedBooks.length > 0 ? (
                 recommendedBooks.map((book, index) => (
@@ -78,27 +82,27 @@ const Recommened = () => {
                     </SwiperSlide>
                 ))
             ) : (
-                <div className='text-gray-500'>No recommendations available.</div>
+                <div className='text-gray-500'>No trending books available right now.</div>
             )}
 
-            {/* --- 3. CUSTOM BUTTONS OVERLAY --- */}
+            {/* --- CUSTOM BUTTONS OVERLAY --- */}
             
-            {/* Prev Button (Over Left Card) */}
+            {/* Prev Button */}
             <button 
-                ref={(node) => setPrevEl(node)} // Callback ref sets state
+                ref={(node) => setPrevEl(node)}
                 className='absolute top-1/2 left-0 transform -translate-y-1/2 z-10 p-2 rounded-full bg-primary text-white hover:bg-blue-700 transition-all duration-200 shadow-lg focus:outline-none'
                 aria-label="Previous Slide"
-                style={{ marginLeft: '-10px' }} // Optional: Nudge it slightly outside or inside
+                style={{ marginLeft: '-10px' }} 
             >
                 <HiOutlineArrowLeft className='size-6'/>
             </button>
 
-            {/* Next Button (Over Right Card) */}
+            {/* Next Button */}
             <button 
-                ref={(node) => setNextEl(node)} // Callback ref sets state
+                ref={(node) => setNextEl(node)}
                 className='absolute top-1/2 right-0 transform -translate-y-1/2 z-10 p-2 rounded-full bg-primary text-white hover:bg-blue-700 transition-all duration-200 shadow-lg focus:outline-none'
                 aria-label="Next Slide"
-                style={{ marginRight: '-10px' }} // Optional: Nudge it slightly outside or inside
+                style={{ marginRight: '-10px' }} 
             >
                 <HiOutlineArrowRight className='size-6'/>
             </button>

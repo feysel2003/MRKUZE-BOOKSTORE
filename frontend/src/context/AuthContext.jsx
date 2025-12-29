@@ -68,7 +68,7 @@ export const AuthProvider = ({children}) => {
         loginUser,
         signInWithGoogle,
         logout,
-        resetPassword // 3. EXPORT IT HERE
+        resetPassword // 3. 
     }
 
     return(
