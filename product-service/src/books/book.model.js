@@ -25,25 +25,31 @@ const bookSchema = new mongoose.Schema({
    type: Number,
    required: true,
  },
- 
-  oldPrice:{
+ oldPrice:{
    type: Number,
    required: true,
  },
+
+ // --- NEW: REVIEWS ARRAY ---
+ reviews: [
+   {
+      userId: { type: String, required: true }, // To track who posted
+      userName: { type: String, required: true }, // To display name without looking up Auth DB
+      comment: { type: String, required: true },
+      rating: { type: Number, required: true, min: 1, max: 5 },
+      createdAt: { type: Date, default: Date.now }
+   }
+ ],
+ // --------------------------
 
  createAt: {
     type:Date,
     default: Date.now,
  },
-
-
-
 },
-
 {
     timestamps: true,
 }
-
 );
 
 const Book = mongoose.model('Book', bookSchema);

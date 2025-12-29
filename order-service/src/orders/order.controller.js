@@ -18,7 +18,7 @@ const createAOrder = async (req, res) => {
 const getOrderByEmail = async (req, res) => {
    try {
     const {email} = req.params;
-    // FIX: Removed .populate('productIds', 'title coverImage')
+
     // Order Service should not know about the Book model structure.
     const orders = await Order.find({email}).sort({createdAt: -1}); 
     

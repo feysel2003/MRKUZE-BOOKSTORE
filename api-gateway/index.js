@@ -1,16 +1,35 @@
 const express = require('express');
 const cors = require('cors');
 const proxy = require('express-http-proxy');
+const rateLimit = require('express-rate-limit'); // <--- 1. IMPORT RATE LIMITER
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5000;
 
+// --- GLOBAL MIDDLEWARE ---
 app.use(cors({
     origin: true,
     credentials: true
 }));
 app.use(express.json());
+
+// --- SECURITY: RATE LIMITING ---
+// This limits each IP to 100 requests every 15 minutes.
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 100, // Limit each IP to 100 requests per `window`
+	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    message: {
+        status: 429,
+        message: "Too many requests from this IP, please try again after 15 minutes."
+    }
+});
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter);
+
 
 // --- DOCKER SERVICE DISCOVERY ---
 // Use the internal Docker names (e.g., http://auth-service:5001)

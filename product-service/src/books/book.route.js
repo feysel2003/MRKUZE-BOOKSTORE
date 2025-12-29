@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('./book.model');
-const { postABook, getAllBooks, getSingleBook, UpdateBook, deleteABook } = require("./book.controller");
+// 1. Import postReview from controller
+const { postABook, getAllBooks, getSingleBook, UpdateBook, deleteABook, postReview } = require("./book.controller");
 const verifyAdminToken = require('../middleware/verifyAdminToken');
-const os = require('os'); // <--- 1. IMPORT OS MODULE
+const os = require('os'); 
 
 // --- INTERNAL ROUTE (With Load Balancing Logic) ---
 router.get("/internal/stats", async (req, res) => {
     try {
-        // 2. Get the Container ID (Hostname)
         const containerID = os.hostname();
-        
-        // 3. Log it so we can see which replica handled the request in the terminal
         console.log(`[LOAD BALANCING] Request handled by Container ID: ${containerID}`);
 
         const totalBooks = await Book.countDocuments();
@@ -25,7 +23,7 @@ router.get("/internal/stats", async (req, res) => {
         res.status(200).json({
             totalBooks,
             trendingBooks,
-            servedBy: containerID // Send ID back (Optional, for debugging)
+            servedBy: containerID
         });
     } catch (error) {
         console.error("Error fetching internal stats", error);
@@ -33,16 +31,21 @@ router.get("/internal/stats", async (req, res) => {
     }
 });
 
-// --- EXISTING ROUTES ---
-
-// post a book
-router.post("/create-book", verifyAdminToken, postABook)
+// --- PUBLIC ROUTES ---
 
 // get all books
 router.get("/", getAllBooks)
 
 // get single endpoint
 router.get("/:id", getSingleBook)
+
+// NEW: Post a review (Public endpoint, logic handles user data)
+router.post("/:id/reviews", postReview);
+
+// --- ADMIN PROTECTED ROUTES ---
+
+// post a book
+router.post("/create-book", verifyAdminToken, postABook)
 
 // update book endpoint
 router.put("/edit/:id", verifyAdminToken, UpdateBook)

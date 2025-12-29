@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// FIX: Removed 'next'. 
+ 
 // When using async, you don't need next(). Mongoose handles it automatically.
 userSchema.pre('save', async function() {
     // If password is not modified, do not hash it again

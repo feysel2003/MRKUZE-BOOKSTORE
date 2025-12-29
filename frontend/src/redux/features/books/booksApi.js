@@ -17,8 +17,11 @@ const booksApi = createApi({
     baseQuery,
     tagTypes: ['Books'],
     endpoints: (builder) => ({
+        
         fetchAllBooks: builder.query({
-            query: () => "/",
+            query: (searchTerm) => {
+                return searchTerm ? `/?search=${searchTerm}` : "/";
+            },
             providesTags: ["Books"]
         }),
 
@@ -51,6 +54,17 @@ const booksApi = createApi({
                 method: "DELETE",
             }),
             invalidatesTags: ["Books"]
+        }),
+
+        // --- NEW: Post Review Mutation ---
+        postReview: builder.mutation({
+            query: ({ id, ...reviewData }) => ({
+                url: `/${id}/reviews`,
+                method: "POST",
+                body: reviewData,
+            }),
+            // Specific invalidation: Only refetch the book that was reviewed
+            invalidatesTags: (result, error, { id }) => [{ type: "Books", id }],
         })
     })
 })
@@ -60,7 +74,8 @@ export const {
     useFetchBookByIdQuery, 
     useAddBookMutation, 
     useUpdateBookMutation, 
-    useDeleteBookMutation 
+    useDeleteBookMutation,
+    usePostReviewMutation // <--- Export the new hook
 } = booksApi;
 
 export default booksApi;

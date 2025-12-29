@@ -20,22 +20,20 @@ const TopSellers = () => {
     const [prevEl, setPrevEl] = useState(null);
     const [nextEl, setNextEl] = useState(null);
 
+    // 2. Get Search Term from URL
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get("search") || ""; 
     const navigate = useNavigate();
 
-    const { data: books = [] } = useFetchAllBooksQuery();
+    // 3. PASS SEARCH TERM TO API HOOK (Backend Filtering)
+    // The backend now returns only books matching the title
+    const { data: books = [] } = useFetchAllBooksQuery(searchQuery);
 
+    // 4. Local Category Filter
+    // We filter the results from the API based on the dropdown
     const filteredBooks = books.filter(book => {
-        const categoryMatch = selectedCategory === "choose a genre" 
-            ? true 
-            : book.category === selectedCategory.toLowerCase();
-
-        const searchMatch = searchQuery 
-            ? book.title.toLowerCase().includes(searchQuery.toLowerCase()) 
-            : true;
-
-        return categoryMatch && searchMatch;
+        if (selectedCategory === "choose a genre") return true;
+        return book.category.toLowerCase() === selectedCategory.toLowerCase();
     });
 
     const handleClearSearch = () => {
@@ -80,7 +78,7 @@ const TopSellers = () => {
                 <Swiper
                     slidesPerView={1}
                     spaceBetween={30}
-                    // 2. Link Navigation to State
+                    // Link Navigation to State
                     navigation={{ prevEl, nextEl }}
                     breakpoints={{
                         640: { slidesPerView: 1, spaceBetween: 20 },
@@ -89,7 +87,7 @@ const TopSellers = () => {
                         1180: { slidesPerView: 3, spaceBetween: 50 }
                     }}
                     modules={[Pagination, Navigation]}
-                    className="mySwiper relative" // Relative for absolute buttons
+                    className="mySwiper relative" 
                 >
                     {filteredBooks.map((book, index) => (
                         <SwiperSlide key={index}>
@@ -97,7 +95,7 @@ const TopSellers = () => {
                         </SwiperSlide>
                     ))}
 
-                    {/* --- 3. Custom Overlay Buttons --- */}
+                    {/* --- Custom Overlay Buttons --- */}
                     
                     {/* Prev Button */}
                     <button 
